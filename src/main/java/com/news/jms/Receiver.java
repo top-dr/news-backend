@@ -1,7 +1,5 @@
-package com.news.tasks;
+package com.news.jms;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -9,6 +7,13 @@ import org.springframework.stereotype.Component;
 import com.news.model.NewsVO;
 import com.news.service.PollyService;
 
+/**
+ * created for batch add urlVoice 
+ * 
+ * used by jmsTemplate.convertAndSend("mailbox", newss); 
+ * @author mac
+ *
+ */
 @Component
 public class Receiver {
 	
@@ -19,7 +24,7 @@ public class Receiver {
 	  public void receiveMessage(NewsVO news) {
 	    System.out.println("************* Begin Received <" + news.getIndex() + ">****************");
 	   
-		pollyService.toPolly(news);
+		//pollyService.toPolly(news);
 	    
 	    System.out.println("************* FIN Received <" + news.getIndex() + ">****************");
 	  }

@@ -18,6 +18,8 @@ public class WebSite {
 	
 	@Column(name="indexweb")
 	private String index;
+	
+	
 	private String webURL;
 
 

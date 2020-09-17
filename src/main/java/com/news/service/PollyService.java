@@ -89,6 +89,7 @@ public class PollyService {
                 if (resp != null) {
                 	//ResponseBytes<SynthesizeSpeechResponse> res = (ResponseBytes<SynthesizeSpeechResponse>) resp;
                 	
+                	
                 	this.putS3Async(resp, urlS3);
                     
                 } else {

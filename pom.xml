@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>consuming-rest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>consuming-rest</name>
-	<description>Demo project for Spring Boot</description>
+	<artifactId>jarida24</artifactId>
+	<version>1.0</version>
+	<name>jarida24</name>
+	<description>Jarida 24</description>
 
 	<properties>
 		<java.version>1.8</java.version>

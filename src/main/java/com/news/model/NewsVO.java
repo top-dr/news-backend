@@ -1,14 +1,17 @@
 package com.news.model;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.jsoup.helper.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewsVO {
+	
+	private static final Logger log = LoggerFactory.getLogger(NewsVO.class);
 
 	private String title;
 	private String img;
@@ -89,11 +92,12 @@ public class NewsVO {
 	}
 
 	public boolean isValidNews() {
-//		if(StringUtil.isBlank(this.content) || StringUtil.isBlank(this.title) 
-//				|| StringUtil.isBlank(this.link)
-//				|| StringUtil.isBlank(this.img)) {
-//			return false;
-//		}
+		if(StringUtil.isBlank(this.content) || StringUtil.isBlank(this.title) 
+				|| StringUtil.isBlank(this.link)
+				|| StringUtil.isBlank(this.img)) {
+			log.error("News parsed is not Valid !!!");
+			return false;
+		}
 		
 		return true;
 	}

@@ -20,6 +20,7 @@ public class ParserUtil {
 	private static final Long HESPRESS = 1L;
 	private static final Long AKHBARONA = 2L;
 	private static final Long ALYAOUM24 = 3L;
+	private static final Long HIBAPRESS = 4L;
 	
 	@Autowired
 	private HespressParser hespressPerser;
@@ -30,6 +31,8 @@ public class ParserUtil {
 	@Autowired
 	private Alyaoum24Parser alyaoum24Parser;
 	
+	@Autowired
+	private HibapressParser hibaPressParser;
 
 	public List<NewsVO> parseWebsite(WebSite website, Document doc){
 		
@@ -41,6 +44,8 @@ public class ParserUtil {
 			return akhbaronaPerser.parse(website, doc);
 		}else if (ALYAOUM24 == website.getWebId()) {
 			return alyaoum24Parser.parse(website, doc);
+		}else if (HIBAPRESS== website.getWebId()) {
+			return hibaPressParser.parse(website, doc);
 		}
 		
 		return listNews;

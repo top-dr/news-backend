@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.news.NewsService;
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
 

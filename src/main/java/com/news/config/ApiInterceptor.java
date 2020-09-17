@@ -1,4 +1,4 @@
-package com.news;
+package com.news.config;
 
 
 import java.util.Base64;

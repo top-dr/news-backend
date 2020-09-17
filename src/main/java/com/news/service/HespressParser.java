@@ -16,10 +16,8 @@ import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.news.NewsService;
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
 
@@ -27,9 +25,6 @@ import com.news.model.WebSite;
 public class HespressParser implements NewsParser {
 	
 	private static final Logger log = LoggerFactory.getLogger(NewsService.class);
-	
-	@Autowired
-	ParserUtil parserUtil;
 
 	@Override
 	public List<NewsVO> parse(WebSite webSite, Document doc) {

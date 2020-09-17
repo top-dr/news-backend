@@ -1,8 +1,7 @@
-package com.news;
+package com.news.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -14,11 +13,11 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import com.news.dao.NewsRepository;
+import com.news.dao.WebSiteRepository;
 import com.news.model.News;
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
-import com.news.service.ParserUtil;
-import com.news.service.PollyService;
 
 @Service
 public class NewsService {
@@ -110,11 +109,11 @@ public class NewsService {
 			
 				for (NewsVO newss : listeNewsVO) {
 					
-					String name = newss.getIndex() + String.valueOf(new Date().getTime()) + ".mp3";
-					
-					String url = baseUrl + name;
-					
-					newss.setVoiceUrl(name);
+//					String name = newss.getIndex() + String.valueOf(new Date().getTime()) + ".mp3";
+//					
+//					String url = baseUrl + name;
+//					
+//					newss.setVoiceUrl(name);
 					
 					News myNews = new News();
 					myNews.setTitle(newss.getTitle());
@@ -126,7 +125,7 @@ public class NewsService {
 					myNews.setWebSite(webSite);
 					myNews.setArticle(newss.getContent());
 					myNews.setWebSiteId(webSite.getWebId());
-					myNews.setVoiceUrl(url);
+					//myNews.setVoiceUrl(url);
 					
 					newsRepo.save(myNews);
 					
@@ -134,7 +133,7 @@ public class NewsService {
 				//	pollyService.toPolly(newss.getContent(), newss.getIndex());
 					
 					//add to Queue => News
-				    jmsTemplate.convertAndSend("mailbox", newss);
+				    //jmsTemplate.convertAndSend("mailbox", newss);
 					
 					
 				}

@@ -7,11 +7,10 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.news.NewsService;
+import com.news.service.NewsService;
 
 @Component
 public class ScheduledTasks {
@@ -27,12 +26,12 @@ public class ScheduledTasks {
 	public void executeTask() {
 		log.info("M1 The time is now {}", dateFormat.format(new Date()) + "Current Thread :"+ Thread.currentThread().getName());
 		
-//		try {
-//			newsService.scrap();
-//		} catch (IOException e) {
-//			
-//			log.error("Exception : " + e);
-//		}
+		try {
+			newsService.scrap();
+		} catch (IOException e) {
+			
+			log.error("Exception : " + e);
+		}
 	}
 	
 }

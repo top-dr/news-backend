@@ -1,4 +1,4 @@
-package com.news;
+package com.news.dao;
 
 import org.springframework.data.repository.CrudRepository;
 
