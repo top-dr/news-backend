@@ -1,6 +1,6 @@
 package com.news.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.jsoup.helper.StringUtil;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ public class NewsVO {
 	private String title;
 	private String img;
 	
-	private Date dateScrap;
+	private LocalDateTime dateScrap;
 	private String link;
 	private String index;
 	private boolean last;
@@ -43,11 +43,11 @@ public class NewsVO {
 		this.img = img;
 	}
 
-	public Date getDateScrap() {
+	public LocalDateTime getDateScrap() {
 		return dateScrap;
 	}
 
-	public void setDateScrap(Date dateSCrap) {
+	public void setDateScrap(LocalDateTime dateSCrap) {
 		this.dateScrap = dateSCrap;
 	}
 

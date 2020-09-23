@@ -1,6 +1,6 @@
 package com.news.model;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,9 @@ public class News {
 	@Column(columnDefinition="text")
 	private String article;
 	
-	private Date dateAdd;
+	private ZonedDateTime dateAdd;
+	
+	
 	private String link;
 	
 	//constraint unique
@@ -119,11 +121,11 @@ public class News {
 		this.article = article;
 	}
 
-	public Date getDateAdd() {
+	public ZonedDateTime getDateAdd() {
 		return dateAdd;
 	}
 
-	public void setDateAdd(Date dateAdd) {
+	public void setDateAdd(ZonedDateTime dateAdd) {
 		this.dateAdd = dateAdd;
 	}
 
