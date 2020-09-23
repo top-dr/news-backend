@@ -1,11 +1,7 @@
 package com.news.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +9,17 @@ import org.springframework.stereotype.Component;
 
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
+import com.news.service.websites.AkhbaronaParser;
+import com.news.service.websites.Alyaoum24Parser;
+import com.news.service.websites.BarlamaneParser;
+import com.news.service.websites.GoudParser;
+import com.news.service.websites.HespressParser;
+import com.news.service.websites.HibapressParser;
+import com.news.service.websites.Le360Parser;
+import com.news.utils.Constantes;
 
 @Component
 public class ParserUtil {
-	
-	private static final Long HESPRESS = 1L;
-	private static final Long AKHBARONA = 2L;
-	private static final Long ALYAOUM24 = 3L;
-	private static final Long HIBAPRESS = 4L;
 	
 	@Autowired
 	private HespressParser hespressPerser;
@@ -33,22 +32,34 @@ public class ParserUtil {
 	
 	@Autowired
 	private HibapressParser hibaPressParser;
+	
+	@Autowired
+	private GoudParser goudParser;
+	
+	@Autowired
+	private BarlamaneParser barlamaneParser;
+	
+	@Autowired
+	private Le360Parser le360Parser;
 
 	public List<NewsVO> parseWebsite(WebSite website, Document doc){
 		
 		List<NewsVO> listNews = new ArrayList<NewsVO>();
 		
-		if(HESPRESS == website.getWebId()) {
-			return hespressPerser.parse(website, doc);
-		}else if (AKHBARONA == website.getWebId()) {
-			return akhbaronaPerser.parse(website, doc);
-		}else if (ALYAOUM24 == website.getWebId()) {
-			return alyaoum24Parser.parse(website, doc);
-		}else if (HIBAPRESS== website.getWebId()) {
-			return hibaPressParser.parse(website, doc);
+		switch (website.getWebId().intValue()) {
+			
+			case Constantes.HESPRESS	:	return hespressPerser.parse(website, doc);
+			case Constantes.AKHBARONA	:	return akhbaronaPerser.parse(website, doc);
+			case Constantes.ALYAOUM24	:	return alyaoum24Parser.parse(website, doc);
+			case Constantes.HIBAPRESS	:	return hibaPressParser.parse(website, doc);
+			case Constantes.GOUD 		:	return goudParser.parse(website, doc);
+			case Constantes.BARLAMANE 	:	return barlamaneParser.parse(website, doc);
+			case Constantes.LE360 		:	return le360Parser.parse(website, doc);
+
+			default: return listNews;
+			
 		}
 		
-		return listNews;
 	}
 	
 }

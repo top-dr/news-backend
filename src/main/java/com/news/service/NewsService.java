@@ -1,6 +1,7 @@
 package com.news.service;
 
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,9 @@ public class NewsService {
 
 	public void scrap() throws IOException {
 	
+//		Optional<WebSite> site = webRepo.findById(6L);
+//		this.scrapWebsite(site.get());
+		
 		Iterable<WebSite> webSites = webRepo.findAll();
 		
 		webSites.forEach(site -> {
@@ -118,7 +122,7 @@ public class NewsService {
 					News myNews = new News();
 					myNews.setTitle(newss.getTitle());
 					myNews.setImg(newss.getImg());
-					myNews.setDateAdd(newss.getDateScrap());
+					myNews.setDateAdd(newss.getDateScrap().atZone(ZoneId.of("Europe/London")));
 					myNews.setLink(newss.getLink());
 					myNews.setIndex(newss.getIndex());
 					myNews.setLast(newss.isLast());

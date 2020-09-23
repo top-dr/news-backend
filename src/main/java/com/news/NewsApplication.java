@@ -1,15 +1,9 @@
 package com.news;
 
-import java.io.IOException;
-import java.util.List;
-
 import javax.jms.ConnectionFactory;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,9 +17,7 @@ import org.springframework.jms.support.converter.MessageType;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.news.dao.WebSiteRepository;
-import com.news.model.NewsVO;
-import com.news.model.WebSite;
-import com.news.service.HibapressParser;
+
 
 @SpringBootApplication
 @EnableScheduling
@@ -33,11 +25,8 @@ public class NewsApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(NewsApplication.class);
 	
-	@Autowired
-	private HibapressParser hibapressParser;
-	
-	@Autowired
-	WebSiteRepository webRepo;
+//	@Autowired
+//	private Le360Parser barlamaneParser;
 
 	public static void main(String[] args) {
 		SpringApplication.run(NewsApplication.class, args);
@@ -67,20 +56,21 @@ public class NewsApplication {
 		
 		return args -> {
 			
-			/** Test **/
-//			WebSite webSite = webRepo.findByWebId(4L);
-//			
-//			Document doc;
-//			try {
-//				doc = Jsoup.connect(webSite.getWebURL()).get();
-//			} catch (IOException e) {
-//				log.error("Website : " + webSite.getId() + " Exception  getting document : " + e);
-//				return;
-//			}
-//			
-//			List<NewsVO> newsVO = hibapressParser.parse(webSite, doc);
-//			
-//			System.out.println("**");
+			/** Test **
+			WebSite webSite = webRepo.findByWebId(7L);
+			
+			Document doc;
+			try {
+				doc = Jsoup.connect(webSite.getWebURL()).get();
+			} catch (IOException e) {
+				log.error("Website : " + webSite.getId() + " Exception  getting document : " + e);
+				return;
+			}
+			
+			List<NewsVO> newsVO = barlamaneParser.parse(webSite, doc);
+			
+			System.out.println("**");
+			
 			/** Test **/
 			
 			

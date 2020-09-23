@@ -1,7 +1,9 @@
-package com.news.service;
+package com.news.service.websites;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,11 +22,12 @@ import org.springframework.stereotype.Component;
 
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
+import com.news.service.NewsParser;
 
 @Component
 public class HespressParser implements NewsParser {
 	
-	private static final Logger log = LoggerFactory.getLogger(NewsService.class);
+	private static final Logger log = LoggerFactory.getLogger(HespressParser.class);
 
 	@Override
 	public List<NewsVO> parse(WebSite webSite, Document doc) {
@@ -69,7 +72,7 @@ public class HespressParser implements NewsParser {
 				
 				// Date ajout				
 				String dateAjout = content.select(".story_date").text();	
-				Date dateAd =  getDate(dateAjout);
+				LocalDateTime dateAd =  getDate(dateAjout);
 							  	
 			  	NewsVO newsVO = new NewsVO();
 				newsVO.setTitle(title);
@@ -94,11 +97,14 @@ public class HespressParser implements NewsParser {
 	 * @param dateAjout
 	 * @return
 	 */
-	public Date getDate(String dateAjout) {
+	public LocalDateTime getDate(String dateAjout) {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm-dd-M-yyyy", Locale.FRANCE);
-		 
-		Date dateAd = null;
+		
+		
+		LocalDateTime dateAd = null;
+		
+		Date dateAdd = null;
 		
 		try {
 			
@@ -112,7 +118,12 @@ public class HespressParser implements NewsParser {
 			String[] tab = dateAjout.split(" ");
 			String dateTime = tab[5] + "-" + tab[1] + "-" + month + "-" + tab[3] ;
 			
-			dateAd = formatter.parse(dateTime);
+			dateAdd = formatter.parse(dateTime);
+			
+			dateAd = dateAdd.toInstant()
+				      .atZone(ZoneId.of("Europe/Paris"))
+				      .toLocalDateTime();
+			
 			
 		} catch (Exception e) {
 			log.error("Exception Formatting Date : " + e);
@@ -121,7 +132,7 @@ public class HespressParser implements NewsParser {
 		if(dateAd != null) {
 			return dateAd;
 		}else {
-			return new Date();
+			return LocalDateTime.now();
 		}
 	}
 }

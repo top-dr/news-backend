@@ -10,9 +10,8 @@ import com.news.model.WebSite;
 public interface NewsParser {
 	
 	/**
-	 * Parser website
+	 * 
 	 * @param webSite
-	 * @param listeNewsVO
 	 * @param doc
 	 * @return
 	 */

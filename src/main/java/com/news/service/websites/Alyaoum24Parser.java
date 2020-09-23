@@ -1,7 +1,9 @@
-package com.news.service;
+package com.news.service.websites;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +21,12 @@ import org.springframework.stereotype.Component;
 
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
+import com.news.service.NewsParser;
 
 @Component
 public class Alyaoum24Parser implements NewsParser {
 	
-	private static final Logger log = LoggerFactory.getLogger(NewsService.class);
+	private static final Logger log = LoggerFactory.getLogger(Alyaoum24Parser.class);
 
 	@Override
 	public List<NewsVO> parse(WebSite webSite, Document doc) {
@@ -68,7 +71,7 @@ public class Alyaoum24Parser implements NewsParser {
 				
 				// Date ajout				
 				String dateAjout = content.select("li.time").text();		
-				Date dateAd = getDate(dateAjout);
+				LocalDateTime dateAd = getDate(dateAjout);
 				
 			  	
 			  	NewsVO newsVO = new NewsVO();
@@ -94,15 +97,19 @@ public class Alyaoum24Parser implements NewsParser {
 	 * @param dateAjout
 	 * @return
 	 */
-	public Date getDate(String dateAjout) {
+	public LocalDateTime getDate(String dateAjout) {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.FRANCE);
 		 
-		Date dateAd = null;
+		LocalDateTime dateAd = null;
 		
 		try {
 			
-			dateAd = formatter.parse(dateAjout);
+			Date dateAdd = formatter.parse(dateAjout);
+			
+			dateAd = dateAdd.toInstant()
+				      .atZone(ZoneId.of("Europe/Paris"))
+				      .toLocalDateTime();
 			
 		} catch (Exception e) {
 			log.error("Exception Formatting Date : " + e);
@@ -111,7 +118,7 @@ public class Alyaoum24Parser implements NewsParser {
 		if(dateAd != null) {
 			return dateAd;
 		}else {
-			return new Date();
+			return LocalDateTime.now();
 		}
 	}
 

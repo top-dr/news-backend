@@ -1,10 +1,10 @@
-package com.news.service;
+package com.news.service.websites;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -19,11 +19,12 @@ import org.springframework.stereotype.Component;
 
 import com.news.model.NewsVO;
 import com.news.model.WebSite;
+import com.news.service.NewsParser;
 
 @Component
 public class AkhbaronaParser implements NewsParser {
 	
-	private static final Logger log = LoggerFactory.getLogger(NewsService.class);
+	private static final Logger log = LoggerFactory.getLogger(AkhbaronaParser.class);
 
 	@Override
 	public List<NewsVO> parse(WebSite webSite, Document doc) {
@@ -66,7 +67,7 @@ public class AkhbaronaParser implements NewsParser {
 				
 				// Date ajout				
 				String dateAjout = content.select(".story_date").text();	
-				Date dateAd =  getDate(dateAjout);
+				LocalDateTime dateAd =  getDate(dateAjout);
 			  	
 			  	NewsVO newsVO = new NewsVO();
 				newsVO.setTitle(title);
@@ -91,12 +92,12 @@ public class AkhbaronaParser implements NewsParser {
 	 * @param dateAjout
 	 * @return
 	 */
-	public Date getDate(String dateAjout) {
+	public LocalDateTime getDate(String dateAjout) {
 		
 		String hourAgo = null;	
 		String minuteAgo = null;
 				 
-		Date dateAd = null;
+		LocalDateTime dateAd = null;
 		
 		try {
 			
@@ -132,7 +133,7 @@ public class AkhbaronaParser implements NewsParser {
 				instant = instant.minus(minute, ChronoUnit.MINUTES);
 			}
 			
-			dateAd = Date.from(instant);
+			dateAd = LocalDateTime.from(instant);
 			
 		} catch (Exception e) {
 			log.error("Exception Formatting Date : " + e);
@@ -141,7 +142,7 @@ public class AkhbaronaParser implements NewsParser {
 		if(dateAd != null) {
 			return dateAd;
 		}else {
-			return new Date();
+			return LocalDateTime.now();
 		}
 	}
 
